@@ -2,11 +2,10 @@ import subprocess
 import json
 import config
 
-def get_virtservices(cli, virtserver):
+def get_virtservices(cli, virtserver, virts):
     l = subprocess.check_output(cli, shell=True, universal_newlines=True)
     virts_list = l.split('\n')
     virts_list = list(filter(None, virts_list))
-    virts = []
     for i in virts_list:
         ls = []
         v = i.split('|')
@@ -16,10 +15,9 @@ def get_virtservices(cli, virtserver):
         ls.append(virtserver)
         if v[5].strip() == 'true':
             virts.append(ls)
-    return virts
 
 def parse_virtservices():
-    all_virts = []
+    virts = []
     for virtserver in config.VIRTSERVERS:
         virtserver_cli = '{} -ls -s {}:9090 -u {} -pw {} | tail -n+4 | head -n-1'.format(
             config.VIRTSERVER_CLI,
@@ -27,9 +25,8 @@ def parse_virtservices():
             config.VIRTSERVER_USER,
             config.VIRTSERVER_PASSWORD
         )
-        virts = get_virtservices(virtserver_cli, virtserver)
-        all_virts.append(virts)
-    return all_virts
+        get_virtservices(virtserver_cli, virtserver, virts)
+    return virts
 
 def generate_dynamic_config():
     d_conf = {
