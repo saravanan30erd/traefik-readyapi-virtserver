@@ -50,3 +50,6 @@ def generate_dynamic_config():
         d_conf['http']['routers'][virt[0]] = router
         d_conf['http']['services'][virt[0]] = service
     print(d_conf)
+
+if __name__ == '__main__':
+    generate_dynamic_config()
