@@ -57,20 +57,22 @@ class VirtServer(object):
             d_conf['http']['services'][virt[0]] = service
         return d_conf
 
-    def generate_json(self):
-        conf = self.generate_dynamic_config()
-        with open('mock-service.json', 'w') as fp:
-            json.dump(conf, fp)
+def generate_json():
+    v = VirtServer()
+    conf = v.generate_dynamic_config()
+    #with open('mock-service.json', 'w') as fp:
+    #    json.dump(conf, fp)
+    return json.dump(conf)
 
-    def generate_yaml(self):
-        conf = self.generate_dynamic_config()
-        with open('mock-service.yaml', 'w') as fp:
-            yaml.dump(conf, fp)
+def generate_yaml():
+    v = VirtServer()
+    conf = v.generate_dynamic_config()
+    with open('mock-service.yaml', 'w') as fp:
+        yaml.dump(conf, fp)
 
 if __name__ == '__main__':
     output = 'yaml'
-    g = VirtServer()
     if output == 'json':
-        g.generate_json()
+        generate_json()
     elif output == 'yaml':
-        g.generate_yaml()
+        generate_yaml()

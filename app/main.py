@@ -1,5 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 import socket
+from virtserver import generate_json
+from virtserver import generate_yaml
 
 app = Flask(__name__)
 
@@ -7,6 +9,14 @@ app = Flask(__name__)
 @app.route('/health', methods=['GET'])
 def check_health():
     return jsonify({'status' : 'OK', 'hostname' : socket.gethostname()}), 200
+
+@app.route('/api/virtserver/config', methods=['GET'])
+def traefik_dynamic_config():
+    content = generate_json()
+    return Response(content,
+        mimetype='application/json',
+        headers={'Content-Disposition':'attachment;filename=services.json'})
+
 
 ## Custom HTTP status error handler ##
 @app.errorhandler(404)
