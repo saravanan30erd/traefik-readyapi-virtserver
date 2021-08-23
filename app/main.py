@@ -10,7 +10,7 @@ app = Flask(__name__)
 def check_health():
     return jsonify({'status' : 'OK', 'hostname' : socket.gethostname()}), 200
 
-@app.route('/api/virtserver/config', methods=['GET'])
+@app.route('/api/config', methods=['GET'])
 def traefik_dynamic_config():
     content = generate_json()
     return Response(content,
