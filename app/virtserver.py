@@ -1,6 +1,7 @@
 import subprocess
 import json
 import config
+import yaml
 
 def get_virtservices(cli, virtserver, virts):
     l = subprocess.check_output(cli, shell=True, universal_newlines=True)
@@ -53,5 +54,10 @@ def generate_json():
     with open('mock-service.json', 'w') as fp:
         json.dump(conf, fp)
 
+def generate_yaml():
+    conf = generate_dynamic_config()
+    with open('mock-service.yaml', 'w') as fp:
+        yaml.dump(conf, fp)
+
 if __name__ == '__main__':
-    generate_json()
+    generate_yaml()
