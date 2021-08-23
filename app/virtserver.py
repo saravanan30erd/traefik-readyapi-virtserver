@@ -62,13 +62,14 @@ def generate_json():
     conf = v.generate_dynamic_config()
     #with open('mock-service.json', 'w') as fp:
     #    json.dump(conf, fp)
-    return json.dump(conf)
+    return json.dumps(conf)
 
 def generate_yaml():
     v = VirtServer()
     conf = v.generate_dynamic_config()
-    with open('mock-service.yaml', 'w') as fp:
-        yaml.dump(conf, fp)
+    #with open('mock-service.yaml', 'w') as fp:
+    #    yaml.dump(conf, fp)
+    return yaml.dump(conf)
 
 if __name__ == '__main__':
     output = 'yaml'

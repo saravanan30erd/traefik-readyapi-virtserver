@@ -12,10 +12,18 @@ def check_health():
 
 @app.route('/api/config', methods=['GET'])
 def traefik_dynamic_config():
-    content = generate_json()
+    output = request.args.get('output')
+    if output == 'json':
+        content = generate_json()
+        mimetype = 'application/json'
+        header = {'Content-Disposition':'attachment;filename=services.json'}
+    elif output == 'yaml':
+        content = generate_yaml()
+        mimetype = 'text/yaml'
+        header = {'Content-Disposition':'attachment;filename=services.yaml'}
     return Response(content,
-        mimetype='application/json',
-        headers={'Content-Disposition':'attachment;filename=services.json'})
+        mimetype=mimetype,
+        headers=header)
 
 
 ## Custom HTTP status error handler ##
