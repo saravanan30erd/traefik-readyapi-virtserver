@@ -48,5 +48,10 @@ def generate_dynamic_config():
         d_conf['http']['services'][virt[0]] = service
     print(d_conf)
 
+def generate_json():
+    conf = generate_dynamic_config()
+    with open('mock-service.json', 'w') as fp:
+        json.dump(conf, fp)
+
 if __name__ == '__main__':
     generate_dynamic_config()
