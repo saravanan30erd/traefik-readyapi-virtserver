@@ -33,7 +33,7 @@ I have created [this](https://github.com/saravanan30erd/traefik-readyapi-virtser
 ## Prerequisite
 
 * [Traefik Installation](https://doc.traefik.io/traefik/getting-started/install-traefik/)
-* [ReadyAPI VirtServer setup](https://support.smartbear.com/virtserver/docs/installation.html)
+* [ReadyAPI VirtServer CLI Installation](https://support.smartbear.com/virtserver/docs/user-tasks/cli.html)
 * Python3
 
 ## Configuration
@@ -51,4 +51,38 @@ Install the dependency packages,
 
 ```
 pip3 install -r requirements.txt
+```
+
+Configure the configuration file app/config.py,
+
+```
+Provide the VirtServer IPs,
+
+VIRTSERVERS = [
+    '10.0.0.1',
+    '10.0.0.2',
+    '10.0.0.3'
+]
+```
+```
+Provide the correct VirtServer CLI Path,
+
+VIRTSERVER_CLI = '/usr/local/bin/virtserver-cli.sh'
+```
+```
+Provide the FQDN,
+
+TRAEFIK_URL = 'mock.example.com'
+```
+```
+Set VirtServer access credentials via Environment Variables,
+
+export USER=test
+export PASSWORD=test
+```
+
+Run the HTTP provider,
+
+```
+python3 app/main.py
 ```
