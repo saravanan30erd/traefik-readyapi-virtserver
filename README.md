@@ -23,10 +23,32 @@ Also If we want to use a load balancer in front of these 3 VirtServer nodes, the
 
 To manage this scenario effectively, I am going to use [Traefik](https://traefik.io/) and its [Dynamic Configuration](https://doc.traefik.io/traefik/providers/overview/) feature using [HTTP provider](https://doc.traefik.io/traefik/providers/http/).
 
-What sets Traefik apart, besides its many features, is that it automatically discovers the right configuration for your services. You can provide
-the dynamic configuration via an HTTP(S) endpoint.
+What sets Traefik apart, besides its many features, is that it automatically discovers the right configuration for your services. You can provide the dynamic configuration via an HTTP(S) endpoint.
 
 ![Traffic Flow](traefik-virtserver.png)
 
 
-I have created [this](Traefik-HTTP-provider-plugin-for-ReadyAPI-VirtServer) HTTP provider to automatically generate the dynamic configuration for Traefik. We don't need to update the Traefik configuration each time the new mock service is deployed into VirtServers, this provider will detect newly deployed mock service configurations(Name, Path and Port number) and then generate the dynamic configuration for Traefik.
+I have created [this](https://github.com/saravanan30erd/traefik-readyapi-virtserver) HTTP provider to automatically generate the dynamic configuration for Traefik. We don't need to update the Traefik configuration each time the new mock service is deployed into VirtServers, this provider will detect newly deployed mock service configurations(Name, Path and Port number) and then generate the dynamic configuration for Traefik.
+
+## Prerequisite
+
+* [Traefik Installation](https://doc.traefik.io/traefik/getting-started/install-traefik/)
+* [ReadyAPI VirtServer setup](https://support.smartbear.com/virtserver/docs/installation.html)
+* Python3
+
+## Configuration
+
+Configure the traefik configuration file to use Dynamic Configuration from HTTP provider,
+
+```
+providers:
+  http:
+    endpoint:
+      - "http://127.0.0.1:3000/api/config?output=json"
+```
+
+Install the dependency packages,
+
+```
+pip3 install -r requirements.txt
+```
