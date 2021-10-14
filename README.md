@@ -1,4 +1,4 @@
-# Traefik HTTP provider plugin for ReadyAPI VirtServer
+# Traefik HTTP provider for ReadyAPI VirtServer
 
 ## Problem statement
 
