@@ -10,10 +10,12 @@
   Example, If we have 100 Mock services and 3 VirtServers, assume every VirtServer running 35 Mock services.
 
   Without Traefik,
-    http://server1:3001/api/mock1
-    http://server2:3002/api/mock2
+  ```
+    http://virt-server1:3001/api/mock1
+    http://virt-server2:3002/api/mock2
     ......
-    http://server3:3100/api/mock3
+    http://virt-server3:3100/api/mock100
+  ```
 
 Its very difficult to maintain many Mock services across many VirtServers. If we want to utilize a mock service mock1 in our frontend applications then we need to check all the VirtServers to find where the mock1 mock service running and its port number.
 
@@ -56,7 +58,7 @@ pip3 install -r requirements.txt
 Configure the configuration file app/config.py,
 
 ```
-Provide the VirtServer IPs,
+Provide the list of VirtServer IPs in the cluster,
 
 VIRTSERVERS = [
     '10.0.0.1',
@@ -85,4 +87,25 @@ Run the HTTP provider,
 
 ```
 python3 app/main.py
+```
+
+## Conclusion
+
+Without Traefik,
+
+```
+http://virt-server1:3001/api/mock1  http://virt-server2:3003/api/mock3  http://virt-server3:3005/api/mock5
+http://virt-server1:3002/api/mock2  http://virt-server2:3004/api/mock4  http://virt-server3:3006/api/mock6
+......
+http://virt-server1:3098/api/mock98  http://virt-server2:3099/api/mock99  http://virt-server3:3100/api/mock100
+
+```
+
+With Traefik and HTTP Provider(Dynamic Configuration),
+
+```
+http://mock.example.com/api/mock1  http://mock.example.com/api/mock3  http://mock.example.com/api/mock5
+http://mock.example.com/api/mock2  http://mock.example.com/api/mock4  http://mock.example.com/api/mock6
+......
+http://mock.example.com/api/mock98  http://mock.example.com/api/mock99  http://mock.example.com/api/mock100
 ```
